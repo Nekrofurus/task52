@@ -1,8 +1,13 @@
-﻿// Задайте двумерный массив целых чисел. Найдите среднее арифметическое элементов в каждом столбце
+// Задача 52 Задайте двумерный массив целых чисел. Найдите среднее арифметическое элементов в каждом столбце
 int numberLine = UserInput("Количество строк в новой таблице = ");
 int numberColumb = UserInput("Количество столбцов в новой таблице = ");
 int maximum = UserInput("Введите максимальное значение = ");
 int minimum = UserInput("Введите минимальное значение = ");
+int[,] createRandomDoubleMatrix = CreateRandomDoubleMatrix(numberLine, numberColumb, minimum, maximum);
+PrintArrayMatrix(createRandomDoubleMatrix, numberLine, numberColumb);
+double[] averageColumb = AverageColumb(createRandomDoubleMatrix);
+PrintArrayMidl(averageColumb);
+
 int[,] CreateRandomDoubleMatrix(int line, int columb, int min, int max)
 {
     int[,] matrix = new int[line, columb];
@@ -22,7 +27,6 @@ int UserInput(string massage)
     int result = Convert.ToInt32(value);
     return result;
 }
-int[,] createRandomDoubleMatrix = CreateRandomDoubleMatrix(numberLine, numberColumb, minimum, maximum);
 void PrintArrayMatrix(int[,] matrix, int line, int columb)
 {
     for (int i = 0; i < matrix.GetLength(0); i++)
@@ -34,28 +38,28 @@ void PrintArrayMatrix(int[,] matrix, int line, int columb)
         Console.WriteLine();
     }
 }
-PrintArrayMatrix(createRandomDoubleMatrix, numberLine, numberColumb);
-int[] averageColumb = AverageColumb(createRandomDoubleMatrix);
-PrintArray(averageColumb);
-int[] AverageColumb(int[,] matrix)
+double[] AverageColumb(int[,] matrix)
 {
-    int[] average = new int[matrix.GetLength(1)];
-    for (int j = 0; j < matrix.GetLength(1); j++)
+    double[] average = new double[matrix.GetLength(1)];
+    double[,] matrixdouble = new double[matrix.GetLength(0),matrix.GetLength(1)];
+       for (int j = 0; j < matrix.GetLength(1); j++)
     {
         
         for (int i = 0; i < matrix.GetLength(0); i++)
         {
-            average[j] = average[j] + matrix[i, j] / matrix.GetLength(0);
+            matrixdouble[i, j] = Convert.ToDouble(matrix[i, j]);
+            average[j] = Math.Round(average[j] + matrixdouble[i, j] / matrixdouble.GetLength(0), 1);
         }
     }
     return average;
 }
-void PrintArray(int[] array)
+void PrintArrayMidl(double[] array)
 {
     Console.Write("Среднее значение ");
     for (int i = 0; i < array.Length; i++)
     {
-        Console.Write($"Для столбца №{i + 1} = {array[i]} ; ");
+        if (i < array.Length -1) Console.Write($"Для столбца №{i + 1} = {array[i]} ; ");
+        else Console.Write($"Для столбца №{i + 1} = {array[i]}.");
     }
 }
 
